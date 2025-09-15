@@ -632,6 +632,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1096198684}
   - component: {fileID: 1096198685}
+  - component: {fileID: 1096198686}
+  - component: {fileID: 1096198687}
   m_Layer: 0
   m_Name: SetupMancheManager
   m_TagString: Untagged
@@ -673,10 +675,47 @@ MonoBehaviour:
   - {fileID: 1154928946108126299, guid: 09348dc33b5b143448732f22965db23a, type: 3}
   - {fileID: 1154928946108126299, guid: 09348dc33b5b143448732f22965db23a, type: 3}
   - {fileID: 1154928946108126299, guid: 09348dc33b5b143448732f22965db23a, type: 3}
-  palette: {fileID: 2482861125964958568, guid: 3038ab8d042bc644d8a9a7a408d3b1a9, type: 3}
   balle: {fileID: 378429254307102355, guid: 2e00f38f073e83b4383572aba49e3d5c, type: 3}
   positionBalleHOSTDepart: {x: 0, y: 2}
   positionBalleCLIENTDepart: {x: 0, y: -2}
+--- !u!114 &1096198686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096198683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26923c19fb6f2214ab09bbe6cd731a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetupPartieTimer
+  timerTexte: {fileID: 1373506358}
+--- !u!114 &1096198687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096198683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 1363975925
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1373506356
 GameObject:
   m_ObjectHideFlags: 0

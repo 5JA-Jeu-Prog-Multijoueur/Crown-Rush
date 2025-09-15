@@ -17,13 +17,13 @@ public class SetupMancheManager : NetworkBehaviour
     // Variables de progression du setup
     private bool setupBlocsFini = false;
 
-    private void OnSpawn()
+    private void Awake()
     {
         GameManager.onMancheSetup += SetupManche;
         GameManager.onMancheStart += StartManche;
     }
 
-    private void OnDespawn()
+    private void OnNetworkDisable()
     {
         GameManager.onMancheSetup -= SetupManche;
         GameManager.onMancheStart -= StartManche;
