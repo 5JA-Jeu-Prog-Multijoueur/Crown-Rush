@@ -227,6 +227,8 @@ MonoBehaviour:
   qteMaxManches: 3
   timerTexte: {fileID: 1373506358}
   panelAttente: {fileID: 899944402}
+  paletteJoueur1: {fileID: 4744119254512723567, guid: 0b769c2f9677f9d46ac71ad979ae7477, type: 3}
+  paletteJoueur2: {fileID: 2482861125964958568, guid: da5f4f0f180cc56488f353f075302162, type: 3}
 --- !u!1 &262809028
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ public class paletteMouvement : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         // Les positionnes aux positions de départ
-        if (IsHost)
+        if (IsServer)
         {
             transform.position = positionPaletteHOSTDepart;
         }

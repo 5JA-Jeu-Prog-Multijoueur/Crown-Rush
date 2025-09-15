@@ -18,7 +18,6 @@ public class SetupMancheManager : NetworkBehaviour
 
     // Variables de progression du setup
     private bool setupBlocsFini = false;
-    private bool setupPalettesFini = false;
 
     private void OnSpawn()
     {
@@ -35,14 +34,13 @@ public class SetupMancheManager : NetworkBehaviour
     private void SetupManche()
     {
         // Apparition des blocs
-        if (IsHost)
+        if (IsServer) // Que le serveur doit faire apparaitre les choses
         {
             StartCoroutine(ApparitionBlocs("host"));
             StartCoroutine(ApparitionBlocs("client"));
+
         }
 
-        // Apparition des palettes
-        SetupPalettes();
     }
 
     private IEnumerator ApparitionBlocs(string joueur)
@@ -139,26 +137,12 @@ public class SetupMancheManager : NetworkBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
-    private void SetupPalettes()
-    {
-        if (IsServer) // Que le serveur doit faire apparaitre les choses
-        {
-            // Instancie la palette en haut. Position gerer par palette
-            GameObject paletteHost = Instantiate(palette, new Vector2(0,0), Quaternion.identity);
-            paletteHost.GetComponent<NetworkObject>().Spawn();
-        }
-        else
-        {
-            // Instancie la palette en bas. Position gerer par palette
-            GameObject paletteClient = Instantiate(palette,  new Vector2(0,0), Quaternion.identity);
-            paletteClient.GetComponent<NetworkObject>().Spawn();
-        }
-    }
+
 
     void Update()
     {
         // Check si le setup est fini
-        if (setupBlocsFini && setupPalettesFini)
+        if (setupBlocsFini)
         {
             Debug.Log("Setup de la manche terminé pour " + (IsHost ? "host" : "client"));
 
@@ -167,7 +151,6 @@ public class SetupMancheManager : NetworkBehaviour
 
             // Reset les variables pour la prochaine manche
             setupBlocsFini = false;
-            setupPalettesFini = false;
         }
     }
 

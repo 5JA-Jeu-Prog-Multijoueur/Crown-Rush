@@ -35,6 +35,10 @@ public class GameManager : NetworkBehaviour
   public static Action onMancheStart;
   public static Action onMancheEnd;
 
+
+  // Palettes des joueurs
+  public GameObject paletteJoueur1; // Prefab de la palette du joueur 1
+  public GameObject paletteJoueur2; // Prefab de la palette du joueur 2
   // 
 
 
@@ -96,6 +100,9 @@ public class GameManager : NetworkBehaviour
       Debug.Log("En attente de plus de joueurs...");
       // Afficher le Panel d'attente de joueurs
       panelAttente.SetActive(true);
+
+      GameObject nouveauJoueur = Instantiate(paletteJoueur1);
+      nouveauJoueur.GetComponent<NetworkObject>().SpawnWithOwnership(clientId);
     }
     else
     {
@@ -103,6 +110,9 @@ public class GameManager : NetworkBehaviour
       // Cacher le Panel d'attente de joueurs
       panelAttente.SetActive(false);
       partieEnCours = true;
+
+      GameObject nouveauJoueur = Instantiate(paletteJoueur2);
+      nouveauJoueur.GetComponent<NetworkObject>().SpawnWithOwnership(clientId);
 
       onPartieStart?.Invoke(); // Appel de l'event partout
     }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6864622280646290818}
   - component: {fileID: 7743501346206747673}
   m_Layer: 0
-  m_Name: PaletteJoueur
+  m_Name: PaletteJoueur2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2482861125964958568}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8, y: -3.7613025, z: 0}
+  m_LocalPosition: {x: 0, y: -4, z: 0}
   m_LocalScale: {x: 2, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.26100624, b: 0.26100624, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1531669607
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 984116100
+  InScenePlacedSourceGlobalObjectIdHash: 1531669607
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
@@ -180,6 +180,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   limiteGauche: -8
   limiteDroite: 8
+  positionPaletteHOSTDepart: {x: 0, y: 0}
+  positionPaletteCLIENTDepart: {x: 0, y: 0}
 --- !u!114 &7743501346206747673
 MonoBehaviour:
   m_ObjectHideFlags: 0
