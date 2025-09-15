@@ -7,7 +7,7 @@ public class Lancement : MonoBehaviour
     void Start()
     {
         // Lancement de la scène de HUB dès le lancement de l'application
-        SceneManager.LoadScene("HUB");
+        SceneManager.LoadScene("Hub");
         
     }
 
