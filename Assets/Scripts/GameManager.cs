@@ -91,31 +91,38 @@ public class GameManager : NetworkBehaviour
 
   private void OnClientConnected(ulong clientId)
   {
-    Debug.Log("Client connected: " + clientId);
+    Debug.Log("Qte clients: "+ NetworkManager.Singleton.ConnectedClientsList.Count);
 
     if (!IsServer) return;
 
-    if (NetworkManager.Singleton.ConnectedClientsList.Count == 1)
+
+    for (int i = 0; i < NetworkManager.Singleton.ConnectedClientsList.Count; i++)
     {
-      Debug.Log("En attente de plus de joueurs...");
-      // Afficher le Panel d'attente de joueurs
-      panelAttente.SetActive(true);
+      Debug.Log("Joueur " + i + " ClientID: " + NetworkManager.Singleton.ConnectedClientsList[i].ClientId);
+      // Faire apparaitre les palettes des joueurs (host = joueur 1, client = joueur 2, chacun à sa palette)
+      GameObject nouveauJoueur = null;
+      // En gros, variable vide en haut pour la remplir de la palette qui correspond au joueur
+      if (i == 0)
+      {
+        nouveauJoueur = Instantiate(paletteJoueur1);
+      }
+      else if (i == 1)
+      {
+        nouveauJoueur = Instantiate(paletteJoueur2);
+      }
 
-      GameObject nouveauJoueur = Instantiate(paletteJoueur1);
-      nouveauJoueur.GetComponent<NetworkObject>().SpawnWithOwnership(clientId);
+      nouveauJoueur.GetComponent<NetworkObject>().SpawnWithOwnership(NetworkManager.Singleton.ConnectedClientsList[i].ClientId);
+      Debug.Log("Palette du joueur " + i + " instanciée.");
+
     }
-    else
-    {
-      Debug.Log("Deux joueurs connectés, prêt à démarrer la partie.");
-      // Cacher le Panel d'attente de joueurs
-      panelAttente.SetActive(false);
-      partieEnCours = true;
 
-      GameObject nouveauJoueur = Instantiate(paletteJoueur2);
-      nouveauJoueur.GetComponent<NetworkObject>().SpawnWithOwnership(clientId);
+    // Ici, le for est fait donc les palettes sont instanciées
+        Debug.Log("Partie lancée");
+    panelAttente.SetActive(false); // Cacher le panel d'attente
+    partieEnCours = true;
+    onPartieStart?.Invoke(); // Appel de l'event partout
 
-      onPartieStart?.Invoke(); // Appel de l'event partout
-    }
+
   }
 
 

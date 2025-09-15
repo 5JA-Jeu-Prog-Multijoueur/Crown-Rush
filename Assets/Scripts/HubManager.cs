@@ -22,7 +22,6 @@ public class HubManager : NetworkBehaviour
   public void EstClient()
   {
     NetworkManager.Singleton.StartClient();
-
   }
 
 
