@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class SetupPartieTimer : MonoBehaviour
 {
-      public TextMeshProUGUI timerTexte;
+    public TextMeshProUGUI timerTexte;
 
-    private void OnEnable()
+    public void Awake()
     {
         GameManager.onPartieStart += TimerLancement;
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         GameManager.onPartieStart -= TimerLancement;
     }
@@ -19,11 +19,13 @@ public class SetupPartieTimer : MonoBehaviour
 
     private void TimerLancement()
     {
+        Debug.Log("Lancement du timer de départ");
         StartCoroutine(Timer());
     }
 
     private IEnumerator Timer()
     {
+        Debug.Log("Lancement du timer de départ");
         timerTexte.text = "3";
         yield return new WaitForSeconds(1);
         timerTexte.text = "2";
@@ -35,6 +37,7 @@ public class SetupPartieTimer : MonoBehaviour
         timerTexte.text = "";
 
         // Lancer le setup de la manche (apparition des blocs, palettes etc.)
+        Debug.Log("GameManager onMancheSetup invoke");
         GameManager.onMancheSetup?.Invoke();
     }
 }

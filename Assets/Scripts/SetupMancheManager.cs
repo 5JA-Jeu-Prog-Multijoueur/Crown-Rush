@@ -8,8 +8,6 @@ public class SetupMancheManager : NetworkBehaviour
     // Blocs // Array des types de blocs à instancier (prefabs)
     public GameObject[] typesDeBlocs;
 
-    // Palette 
-    public GameObject palette;
 
     // Balle 
     public GameObject balle;
@@ -19,13 +17,13 @@ public class SetupMancheManager : NetworkBehaviour
     // Variables de progression du setup
     private bool setupBlocsFini = false;
 
-    private void OnSpawn()
+    private void Awake()
     {
         GameManager.onMancheSetup += SetupManche;
         GameManager.onMancheStart += StartManche;
     }
 
-    private void OnDespawn()
+    private void OnNetworkDisable()
     {
         GameManager.onMancheSetup -= SetupManche;
         GameManager.onMancheStart -= StartManche;
@@ -33,9 +31,12 @@ public class SetupMancheManager : NetworkBehaviour
 
     private void SetupManche()
     {
+        Debug.Log("Setup de la manche");
         // Apparition des blocs
         if (IsServer) // Que le serveur doit faire apparaitre les choses
         {
+
+            Debug.Log("Setup de la manche lance coroutines");
             StartCoroutine(ApparitionBlocs("host"));
             StartCoroutine(ApparitionBlocs("client"));
 
