@@ -52,8 +52,8 @@ public class SetupMancheManager : NetworkBehaviour
         bool apparitionEnCours = true;
 
         // Qte max de blocs et de lignes
-        int qteMaxBlocsParLigne = 13;
-        int qteMaxLignes = 8;
+        int qteMaxBlocsParLigne = 8;
+        int qteMaxLignes = 13;
 
         // Qte actuelle de blocs et de lignes
         int qteBlocsParLigne = 1;
@@ -71,14 +71,14 @@ public class SetupMancheManager : NetworkBehaviour
         if (joueur == "host")
         {
             // Variables en haut. Donc déplacement de gauche à droite et haut en bas
-            coordBloc = new Vector2(0, 0);
-            directionX = 1;
+            coordBloc = new Vector2(-3.5f, 4.9f);
+            directionX = 1; 
             directionY = -1;
         }
         else
         {
             // Variables en bas. Donc déplacement de droite à gauche et bas en haut
-            coordBloc = new Vector2(8f, -4f);
+            coordBloc = new Vector2(3.5f, -4.9f);
             directionX = -1;
             directionY = 1;
         }

@@ -57,22 +57,10 @@ public class GameManager : NetworkBehaviour
     }
   }
 
-  // Fonctions pour attribuer les joueurs a host / client
-  public void lancerHost()
-  {
-    NetworkManager.Singleton.StartHost();
-  }
-  
-  public void lancerClient()
-  {
-    NetworkManager.Singleton.StartClient();
-  }
-
-
-
 
   public override void OnNetworkSpawn()
   {
+    Debug.Log("GameManager OnNetworkSpawn");
     base.OnNetworkSpawn();
 
     NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
