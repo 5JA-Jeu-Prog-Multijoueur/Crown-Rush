@@ -132,8 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   ShowTopMostFoldoutHeaderGroup: 1
-  limiteGauche: -8
-  limiteDroite: 8
+  limiteGauche: -3
+  limiteDroite: 3
   positionPaletteHOSTDepart: {x: 0, y: 0}
   positionPaletteCLIENTDepart: {x: 0, y: 0}
 --- !u!114 &6884672053662448545
