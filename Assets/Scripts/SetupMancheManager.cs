@@ -53,7 +53,7 @@ public class SetupMancheManager : NetworkBehaviour
 
         // Qte max de blocs et de lignes
         int qteMaxBlocsParLigne = 8;
-        int qteMaxLignes = 13;
+        int qteMaxLignes = 10;
 
         // Qte actuelle de blocs et de lignes
         int qteBlocsParLigne = 1;
@@ -130,7 +130,7 @@ public class SetupMancheManager : NetworkBehaviour
 
 
             // Attend 0.1 seconde
-            yield return new WaitForSeconds(0.1f); // 1 seconde / bloc pour testing
+            yield return new WaitForSeconds(0.05f); // 1 seconde / bloc pour testing
         } // Le while se refait
 
         Debug.Log("Apparition des blocs terminée pour " + joueur);

@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7221217221230184427}
   - component: {fileID: -3800704363383269435}
   m_Layer: 0
-  m_Name: Bloc_Normal
-  m_TagString: Normal
+  m_Name: Bloc_DoubleHP
+  m_TagString: DoubleHP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7302986923135773792, guid: fa948a85573c8cf40ae9eb746012f934, type: 3}
+  m_Sprite: {fileID: 5302993166778109147, guid: 27b34f3ad254afc4f9009a74be330795, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1842096345
+  GlobalObjectIdHash: 2264910682
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
