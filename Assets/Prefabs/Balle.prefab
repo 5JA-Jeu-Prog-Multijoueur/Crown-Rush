@@ -260,3 +260,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Balle
   ShowTopMostFoldoutHeaderGroup: 1
+  vitesseBalle: 2
+  blocNormalSprite: {fileID: 7302986923135773792, guid: fa948a85573c8cf40ae9eb746012f934, type: 3}

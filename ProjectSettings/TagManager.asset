@@ -9,6 +9,7 @@ TagManager:
   - DoubleHP
   - Cactus
   - Speed
+  - Etoile
   layers:
   - Default
   - TransparentFX

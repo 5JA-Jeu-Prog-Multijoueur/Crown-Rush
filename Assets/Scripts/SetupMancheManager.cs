@@ -15,6 +15,11 @@ public class SetupMancheManager : NetworkBehaviour
     public Vector2 positionBalleHOSTDepart;
     public Vector2 positionBalleCLIENTDepart;
 
+    // Etoile
+    public GameObject etoile;
+    public float etoileLimiteGauche;
+    public float etoileLimiteDroite;
+
 
     // Variables de progression du setup
     private bool setupBlocsFini = false;
@@ -178,6 +183,13 @@ public class SetupMancheManager : NetworkBehaviour
             GameObject balleClient = Instantiate(balle, positionBalleCLIENTDepart, Quaternion.identity);
             balleClient.GetComponent<NetworkObject>().Spawn();
             Debug.Log("Balles apparues");
+
+            // Instancier l'etoile quelque part au centre du terrain de jeu (0) entre limteGauche et limiteDroite
+            float positionXaleatoire = UnityEngine.Random.Range(etoileLimiteGauche, etoileLimiteDroite);
+            Vector2 positionEtoile = new Vector2(positionXaleatoire, 0);
+            GameObject nouvelleEtoile = Instantiate(etoile, positionEtoile, Quaternion.identity);
+            nouvelleEtoile.GetComponent<NetworkObject>().Spawn(); // Faire apparaitre pour les joueurs
+
 
 
         }
