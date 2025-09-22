@@ -31,6 +31,7 @@ public class HubManager : NetworkBehaviour
 
     if (NetworkManager.Singleton.ConnectedClientsList.Count >= 2) // Si 2 joueurs connectés
     {
+      Debug.Log("2 joueurs connectés, lancement de la partie");
       NetworkManager.Singleton.SceneManager.LoadScene("Jeu", LoadSceneMode.Single);
       // 
     }

@@ -11,18 +11,6 @@ public class paletteMouvement : NetworkBehaviour
     public Vector2 positionPaletteCLIENTDepart;
 
 
-    public override void OnNetworkSpawn()
-    {
-        // Les positionnes aux positions de départ
-        if (IsServer)
-        {
-            transform.position = positionPaletteHOSTDepart;
-        }
-        else
-        {
-            transform.position = positionPaletteCLIENTDepart;
-        }
-    }
     void Update()
     {
         // Gerer les inputs

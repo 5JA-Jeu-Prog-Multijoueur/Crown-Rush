@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using System.Collections;
+using System;
 
 public class SetupMancheManager : NetworkBehaviour
 {
@@ -13,6 +14,7 @@ public class SetupMancheManager : NetworkBehaviour
     public GameObject balle;
     public Vector2 positionBalleHOSTDepart;
     public Vector2 positionBalleCLIENTDepart;
+
 
     // Variables de progression du setup
     private bool setupBlocsFini = false;
@@ -52,8 +54,8 @@ public class SetupMancheManager : NetworkBehaviour
         bool apparitionEnCours = true;
 
         // Qte max de blocs et de lignes
-        int qteMaxBlocsParLigne = 13;
-        int qteMaxLignes = 8;
+        int qteMaxBlocsParLigne = 8;
+        int qteMaxLignes = 10;
 
         // Qte actuelle de blocs et de lignes
         int qteBlocsParLigne = 1;
@@ -71,14 +73,14 @@ public class SetupMancheManager : NetworkBehaviour
         if (joueur == "host")
         {
             // Variables en haut. Donc déplacement de gauche à droite et haut en bas
-            coordBloc = new Vector2(0, 0);
+            coordBloc = new Vector2(-3.5f, 4.9f);
             directionX = 1;
             directionY = -1;
         }
         else
         {
             // Variables en bas. Donc déplacement de droite à gauche et bas en haut
-            coordBloc = new Vector2(8f, -4f);
+            coordBloc = new Vector2(3.5f, -4.9f);
             directionX = -1;
             directionY = 1;
         }
@@ -88,19 +90,20 @@ public class SetupMancheManager : NetworkBehaviour
         {
             // 1: Détermine le type de bloc 
             // Random.Range(0, longueur de l'array typesDeBlocs)
-            int typeDeBloc = Random.Range(0, typesDeBlocs.Length);
+            
+            int typeDeBloc = UnityEngine.Random.Range(0, typesDeBlocs.Length);
 
 
             // 2: Apparaitre un bloc (comme ça le 1er est aussi randomized)
 
             // Instancie le bloc aux coordonnées actuelles
-            GameObject nouveauBloc = Instantiate(typesDeBlocs[typeDeBloc], new Vector2(coordBloc.x, coordBloc.y),Quaternion.identity); // Quaternion.identity pour aucune rotation (2D)
+            GameObject nouveauBloc = Instantiate(typesDeBlocs[typeDeBloc], new Vector2(coordBloc.x, coordBloc.y), Quaternion.identity); // Quaternion.identity pour aucune rotation (2D)
             nouveauBloc.GetComponent<NetworkObject>().Spawn(); // Spawn le bloc en réseau
 
-            Debug.Log(
-              "Bloc apparu! Coords: " + coordBloc + " Type: " + typeDeBloc +
-              " | Qte blocs actuelle: " + qteBlocsParLigne +
-              " Qte lignes actuelle: " + qteLignes);
+            // Debug.Log(
+            //   "Bloc apparu! Coords: " + coordBloc + " Type: " + typeDeBloc +
+            //   " | Qte blocs actuelle: " + qteBlocsParLigne +
+            //   " Qte lignes actuelle: " + qteLignes);
 
             qteBlocsParLigne++;
 
@@ -130,11 +133,14 @@ public class SetupMancheManager : NetworkBehaviour
 
 
             // Attend 0.1 seconde
-            yield return new WaitForSeconds(0.1f); // 1 seconde / bloc pour testing
+            yield return new WaitForSeconds(0.05f); // 1 seconde / bloc pour testing
         } // Le while se refait
 
         Debug.Log("Apparition des blocs terminée pour " + joueur);
-        setupBlocsFini = true;
+        if (IsServer)
+        {
+            setupBlocsFini = true;
+        }
         yield return new WaitForSeconds(0.5f);
     }
 
@@ -143,15 +149,15 @@ public class SetupMancheManager : NetworkBehaviour
     void Update()
     {
         // Check si le setup est fini
-        if (setupBlocsFini)
+        if (setupBlocsFini && IsServer)
         {
-            Debug.Log("Setup de la manche terminé pour " + (IsHost ? "host" : "client"));
+            
+            // Reset les variables pour la prochaine manche
+            setupBlocsFini = false;
+            Debug.Log("Setup de la manche terminé");
 
             // Lancer la manche
             GameManager.onMancheStart?.Invoke();
-
-            // Reset les variables pour la prochaine manche
-            setupBlocsFini = false;
         }
     }
 
@@ -168,8 +174,13 @@ public class SetupMancheManager : NetworkBehaviour
             GameObject balleHost = Instantiate(balle, positionBalleHOSTDepart, Quaternion.identity);
             balleHost.GetComponent<NetworkObject>().Spawn();
 
+
             GameObject balleClient = Instantiate(balle, positionBalleCLIENTDepart, Quaternion.identity);
             balleClient.GetComponent<NetworkObject>().Spawn();
+            Debug.Log("Balles apparues");
+
+
         }
     }
+
 }

@@ -9,7 +9,7 @@ public class GameManager : NetworkBehaviour
 
   // VARIABLES 
   // Singleton
-  public static GameManager instance;
+  public static GameManager instance { private set; get; }
 
   // Partie
   public bool partieEnCours { private set; get; }
@@ -45,11 +45,10 @@ public class GameManager : NetworkBehaviour
   // Création du singleton
   private void Awake()
   {
-
     if (instance == null)
     {
       instance = this;
-      DontDestroyOnLoad(gameObject);
+      //  DontDestroyOnLoad(gameObject);
     }
     else
     {
@@ -57,22 +56,10 @@ public class GameManager : NetworkBehaviour
     }
   }
 
-  // Fonctions pour attribuer les joueurs a host / client
-  public void lancerHost()
-  {
-    NetworkManager.Singleton.StartHost();
-  }
-  
-  public void lancerClient()
-  {
-    NetworkManager.Singleton.StartClient();
-  }
-
-
-
 
   public override void OnNetworkSpawn()
   {
+    Debug.Log("GameManager OnNetworkSpawn");
     base.OnNetworkSpawn();
 
     NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
@@ -104,11 +91,11 @@ public class GameManager : NetworkBehaviour
       // En gros, variable vide en haut pour la remplir de la palette qui correspond au joueur
       if (i == 0)
       {
-        nouveauJoueur = Instantiate(paletteJoueur1);
+        nouveauJoueur = Instantiate(paletteJoueur1, new Vector2(0, 8.5f), Quaternion.identity);
       }
-      else if (i == 1)
+      else if (i == 1)  
       {
-        nouveauJoueur = Instantiate(paletteJoueur2);
+        nouveauJoueur = Instantiate(paletteJoueur2, new Vector2(0, -8.5f), Quaternion.identity);
       }
 
       nouveauJoueur.GetComponent<NetworkObject>().SpawnWithOwnership(NetworkManager.Singleton.ConnectedClientsList[i].ClientId);
@@ -132,6 +119,7 @@ public class GameManager : NetworkBehaviour
   private void Start()
   {
     Debug.Log("GameManager started.");
+     
   }
 
 
