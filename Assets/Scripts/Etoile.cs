@@ -49,7 +49,6 @@ public class Etoile : NetworkBehaviour
             }
 
             direction = direction * -1; // Inverse la direction
-            yield return new WaitForSeconds(0.5f); // Petite pause avant de repartir
 
         }
 
