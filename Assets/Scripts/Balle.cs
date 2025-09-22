@@ -1,10 +1,13 @@
 using UnityEngine;
+using System.Collections;
 using Unity.Netcode;
 
 public class Balle : NetworkBehaviour
 {
 
     public float vitesseBalle = 2f;
+
+    public Sprite blocNormalSprite;
 
     private Vector2 positionDepart;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,7 +39,7 @@ public class Balle : NetworkBehaviour
 
     private void pousseBalles()
     {
-        Debug.Log("Pousse les balles");
+        Debug.Log("Lance les balles");
         System.Random random = new System.Random();
         float aleaX = random.Next(0, 2) == 0 ? -vitesseBalle : vitesseBalle;
         float aleaY = random.Next(0, 2) == 0 ? -vitesseBalle : vitesseBalle;
@@ -60,36 +63,35 @@ public class Balle : NetworkBehaviour
         switch (collision.gameObject.tag)
         {
             case "Normal":
-                Debug.Log("Balle a touché un bloc normal");
+                //Debug.Log("Balle a touché un bloc normal");
                 // RIEN
                 Destroy(collision.gameObject);
                 break;
             case "DoubleHP":
-                Debug.Log("Balle a touché un bloc doubleHP");
+                //Debug.Log("Balle a touché un bloc doubleHP");
                 // Change le tag + sprite en bloc normal
                 collision.gameObject.tag = "Normal";
-                collision.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Modele_Bloc_Base_0");
+                collision.gameObject.GetComponent<SpriteRenderer>().sprite = blocNormalSprite;
 
                 break;
             case "Cactus":
-                Debug.Log("Balle a touché un bloc cactus");
+                //Debug.Log("Balle a touché un bloc cactus");
                 // On ralentit la balle de 15% pour 5 secondes
-                GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity * 0.85f;
+                GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity * 0.50f;
                 // Fonction dans 5 secondes pour reset la vitesse
-                Invoke("ResetVitesse", 5f);
+                StartCoroutine(ResetVitesse("lent"));
                 Destroy(collision.gameObject);
 
                 break;
             case "Speed":
-                Debug.Log("Balle a touché un bloc speed");
+                //Debug.Log("Balle a touché un bloc speed");
                 // On accélère la balle de 15%
                 GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity * 1.15f;
                 Destroy(collision.gameObject);
                 // Fonction dans 5 secondes pour reset la vitesse
-                Invoke("ResetVitesse", 5f);
+                //ResetVitesse("speed");
                 break;
             default:
-                Debug.Log("Balle a touché un objet non géré : " + collision.gameObject.name + " avec le tag: " + collision.gameObject.tag);
                 break;
         }
 
@@ -110,10 +112,21 @@ public class Balle : NetworkBehaviour
         }
     }
 
-    private void ResetVitesse()
+    IEnumerator ResetVitesse(string etat)
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.linearVelocity = rb.linearVelocity * vitesseBalle;
+        yield return new WaitForSeconds(5f);
+
+        Debug.Log(this.name + " Reset la vitesse de la balle");
+        // Enlever le boost de la balle selon si elle a ete speed ou non
+        if (etat == "speed")
+        {
+            GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity / 1.15f;
+        }
+        else if (etat == "lent")
+        {
+            GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity / 0.50f;
+        }
+
     }
 
     private void RepositionnerBalle()

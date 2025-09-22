@@ -1529,7 +1529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea40bb9d1e5ee24e89f9e8a2d9f4909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Musique
-  ShowTopMostFoldoutHeaderGroup: 1
   musique: {fileID: 8300000, guid: 93da98fabd9da6144ade9b36b1ae1fb9, type: 3}
 --- !u!114 &2117992496
 MonoBehaviour:
