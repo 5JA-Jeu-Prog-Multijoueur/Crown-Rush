@@ -5,6 +5,9 @@ using System;
 
 public class Etoile : NetworkBehaviour
 {
+
+    
+
     public float limiteGauche;
     public float limiteDroite;
     public float vitesseEtoile;
@@ -18,38 +21,46 @@ public class Etoile : NetworkBehaviour
     // Deplacement gauche-droite de l'etoile (en restant dans les limites)
     IEnumerator bougerEtoile()
     {
-        float direction = UnityEngine.Random.Range(0, 2) == 0 ? -1f : 1f;
+
+        bool direction = UnityEngine.Random.Range(0, 2) == 0 ? true : false; // Direction de depart au hasard
+        float lerpProgress = 0.0f; // Variable de progression du lerp
+
 
         while (true) // Toujours en mouvement (avec lerp) - Va vers la gauche/droite pour debuter et ensuite fait des allers-retours entre limiteGauche et limiteDroite
         {
+
             // Deplace dans la direction random choisie jusqu'a l'une des deux limites
-
-            if (direction == -1) // Vers la gauche
+            if (direction) // Va a droite
             {
-                while (transform.position.x >= limiteGauche)
+                lerpProgress += Time.deltaTime * vitesseEtoile;
+                if (lerpProgress >= 1.0f)
                 {
-                    transform.position = Vector2.Lerp(transform.position, new Vector2(limiteGauche, transform.position.y), Time.deltaTime * vitesseEtoile); // Mouvement
-                    yield return null;
+                    lerpProgress = 1.0f; // Set a 1 pour s'assurer qu'il atteint la fin
+                    direction = false; // Change direction
                 }
-                direction = 1; // Change de direction
             }
-            else // Vers la droite
+            else // Va a gauche
             {
-                while (transform.position.x <= limiteDroite)
+                lerpProgress -= Time.deltaTime * vitesseEtoile;
+                if (lerpProgress <= 0.0f)
                 {
-                    transform.position = Vector2.Lerp(transform.position, new Vector2(limiteDroite, transform.position.y), Time.deltaTime * vitesseEtoile); // Mouvement
-                    yield return null;
+                    lerpProgress = 0.0f; // Set a 0 pour s'assurer qu'il atteint la fin
+                    direction = true; // Change direction
                 }
-                direction = -1; // Change de direction
             }
 
+            // Calculer la position cible en utilisant le lerp  
+            float targetX = Mathf.Lerp(limiteGauche, limiteDroite, lerpProgress);
+
+            // Mouvement
+            transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
 
 
         }
+        yield return new WaitForSeconds(0.5f); // Petite pause avant de repartir
 
-        Debug.Log("Etoile a fini de bouger");
     }
 
 
-    
+ 
 }
