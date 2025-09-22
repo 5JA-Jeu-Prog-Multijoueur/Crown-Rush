@@ -62,6 +62,11 @@ public class Balle : NetworkBehaviour
         // Puis on donne/deal avec les effets selon le type de bloc touché (+ delete objet toucher)
         switch (collision.gameObject.tag)
         {
+            case "Etoile":
+                Debug.Log(this.name + " a touché l'étoile, fin de manche!");
+                Destroy(collision.gameObject);
+
+                break;
             case "Normal":
                 //Debug.Log("Balle a touché un bloc normal");
                 // RIEN
