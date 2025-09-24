@@ -6,6 +6,7 @@ using Unity.Netcode.Components;
 public class Balle : NetworkBehaviour
 {
 
+    public GameObject animationFin;
     public float vitesseBalle = 2f;
 
     public Sprite blocNormalSprite;
@@ -67,6 +68,10 @@ public class Balle : NetworkBehaviour
                 Debug.Log(this.name + " a touché l'étoile, fin de manche!");
                 Destroy(collision.gameObject);
 
+                // Dire au script AnimationFin de lancer l'animation de fin (avec le parametre pour le texte)
+                animationFin.SetActive(true);
+                Invoke("mancheFin", 0.1f); // Lancer la fin de manche dans 0.5 seconde
+
                 break;
             case "Normal":
                 //Debug.Log("Balle a touché un bloc normal");
@@ -100,11 +105,13 @@ public class Balle : NetworkBehaviour
             default:
                 break;
         }
-
-
-
-
     }
+
+    private void mancheFin()
+    {
+        animationFin.GetComponent<AnimationFinScript>().animationFinLancement(IsHost ? "host" : "client");
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

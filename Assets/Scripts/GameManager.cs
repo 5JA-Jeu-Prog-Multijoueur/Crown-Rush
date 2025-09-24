@@ -63,6 +63,9 @@ public class GameManager : NetworkBehaviour
     base.OnNetworkSpawn();
 
     NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+    onMancheEnd += finManche;
+
+    
   }
 
   public override void OnNetworkDespawn()
@@ -72,6 +75,7 @@ public class GameManager : NetworkBehaviour
     if (NetworkManager.Singleton != null)
     {
       NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+      onMancheEnd -= finManche;
     }
   }
 
@@ -177,7 +181,7 @@ public class GameManager : NetworkBehaviour
   public void lanceManche()
   {
     Debug.Log("Lancement d'une manche");
-    onMancheSetup?.Invoke();
+    onPartieStart?.Invoke(); // A la place de manche pour re-avoir le timer
 
     // Script pour apparition des blocs
   }
