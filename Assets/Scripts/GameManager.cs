@@ -104,22 +104,28 @@ public class GameManager : NetworkBehaviour
     }
 
     // Ici, le for est fait donc les palettes sont instanciées
-        Debug.Log("Partie lancée");
+    Debug.Log("Partie lancée");
     panelAttente.SetActive(false); // Cacher le panel d'attente
+    CacherPanelAttenteClientRpc(); // RPC pour cacher le panel d'attente sur tous les clients
     partieEnCours = true;
     onPartieStart?.Invoke(); // Appel de l'event partout
 
 
   }
 
-
+  // RPC pour cacher le panelAttente sur tous les clients
+  [ClientRpc]
+  private void CacherPanelAttenteClientRpc()
+  {
+    panelAttente.SetActive(false);
+  }
 
   // 
 
   private void Start()
   {
     Debug.Log("GameManager started.");
-     
+
   }
 
 
@@ -136,6 +142,20 @@ public class GameManager : NetworkBehaviour
   {
     Debug.Log("Fin de la manche actuelle");
 
+    // Enlever tout ce qui doit etre enlevé (blocs, balles etc.)
+    int layer = LayerMask.NameToLayer("mancheObjets");
+    GameObject[] tousObjets = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+    
+    foreach (GameObject objet in tousObjets)
+    {
+      if (objet.layer == layer)
+      {
+        Destroy(objet);
+      }
+    }
+
+
+    // Incrémenter le nombre de manches jouées
     qteManches++;
     mancheEnCours = false;
     mancheTerminee = true;
@@ -157,9 +177,10 @@ public class GameManager : NetworkBehaviour
   public void lanceManche()
   {
     Debug.Log("Lancement d'une manche");
+    onMancheSetup?.Invoke();
 
     // Script pour apparition des blocs
-    }
+  }
 
     // Une fois le script des blocs fini, donne aux joueurs le contrôle de leur palette + lance la balle 
   
@@ -167,7 +188,6 @@ public class GameManager : NetworkBehaviour
   {
     Debug.Log("Fin de la partie");
   }
-
 
 }
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 
 public class Balle : NetworkBehaviour
 {
@@ -88,7 +89,7 @@ public class Balle : NetworkBehaviour
                 Destroy(collision.gameObject);
 
                 break;
-            case "Speed":
+            case "Eclair":
                 //Debug.Log("Balle a touché un bloc speed");
                 // On accélère la balle de 15%
                 GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity * 1.15f;
@@ -113,7 +114,6 @@ public class Balle : NetworkBehaviour
             // Desactive la balle, 5 secondes d'attente, replace au position de depart 
             gameObject.SetActive(false);
             Invoke("RepositionnerBalle", 5f);
-
         }
     }
 
@@ -138,7 +138,14 @@ public class Balle : NetworkBehaviour
     {
         // Replace la balle au centre, reset la vitesse, et réactive la balle
         gameObject.SetActive(true);
+        // Enlever l'interpolation (pour empecher un slide visible lorsqu'on replace la balle)
+        this.GetComponent<NetworkTransform>().Interpolate = false;
         transform.position = positionDepart;
+
+        // Remet l'interpolation
+        this.GetComponent<NetworkTransform>().Interpolate = true;
+
+        // Relance la balle
         GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
         System.Random random = new System.Random();
         float aleaX = random.Next(0, 2) == 0 ? -vitesseBalle : vitesseBalle;
