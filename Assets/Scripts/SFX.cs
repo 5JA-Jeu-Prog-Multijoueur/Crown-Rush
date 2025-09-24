@@ -78,7 +78,8 @@ public class NetworkSFXManager : NetworkBehaviour
         // Pitch normal
         audioSource.pitch = 1f;
         PlaySFXLocal("Select_Menu");
-        audioSource.pitch = 1f; // reset
+        // calculer la durée du son
+        Invoke("ResetPitch", soundEffects[5].clip.length + 0.01f);
     }
 
     public void JoueBouttonClick()
@@ -86,13 +87,52 @@ public class NetworkSFXManager : NetworkBehaviour
         // Pitch plus bas
         audioSource.pitch = 1.5f;
         PlaySFXLocal("Select_Menu");
+        // calculer la durée du son modifié
+        float duree = (soundEffects[5].clip.length / UnityEngine.Mathf.Abs(audioSource.pitch));
+        Invoke("ResetPitch", duree + 0.01f);
     }
 
     public void JoueCollision()
     {
-        // Pitch aléatoire entre 0.8 et 1.2
-        audioSource.pitch = Random.Range(0.8f, 1.2f);                           // Fonctionne???
-        PlaySFXGlobal("Collision");
-        audioSource.pitch = 1f; // reset
+        // Pitch aléatoire
+        audioSource.pitch = Random.Range(0.5f, 2.5f);
+        PlaySFXLocal("Collision");
+        // Calculer la durée du son modifié
+        float duree = (soundEffects[2].clip.length / UnityEngine.Mathf.Abs(audioSource.pitch));
+        Invoke("ResetPitch", duree + 0.01f);
+    }
+
+    public void JoueBalleSortie()
+    {
+        PlaySFXLocal("Balle_Sortie");
+        // calculer la durée du son
+        Invoke("ResetPitch", soundEffects[0].clip.length + 0.01f);
+    }
+
+    public void JoueEclair()
+    {
+        PlaySFXLocal("Eclair");
+        // calculer la durée du son
+        Invoke("ResetPitch", soundEffects[3].clip.length + 0.01f);
+    }
+
+    public void JoueCactus()
+    {
+        PlaySFXLocal("Cactus");
+        // calculer la durée du son
+        Invoke("ResetPitch", soundEffects[1].clip.length + 0.01f);
+    }
+
+    public void JoueGagne()
+    {
+        PlaySFXGlobal("Gagne");
+        // calculer la durée du son
+        Invoke("ResetPitch", soundEffects[4].clip.length + 0.01f);
+    }
+
+    // Réinitialiser le pitch après un son modifié
+    private void ResetPitch()
+    {
+        audioSource.pitch = 1f;
     }
 }

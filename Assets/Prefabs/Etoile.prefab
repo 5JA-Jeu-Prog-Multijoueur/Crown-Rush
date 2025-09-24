@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6980266598481328598}
   - component: {fileID: 6413884557827702254}
   - component: {fileID: -145450315433204955}
-  m_Layer: 3
+  - component: {fileID: 4345798395721521128}
+  m_Layer: 0
   m_Name: Etoile
   m_TagString: Etoile
   m_Icon: {fileID: 0}
@@ -170,3 +171,15 @@ MonoBehaviour:
   limiteGauche: -3.5
   limiteDroite: 3.5
   vitesseEtoile: 5
+--- !u!114 &4345798395721521128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4879838452707882751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c63a19fb4eade4188c7c91d4f3046c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GagneSFX
