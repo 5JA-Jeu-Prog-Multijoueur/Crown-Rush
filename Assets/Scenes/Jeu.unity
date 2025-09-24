@@ -1701,6 +1701,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AnimationFin
       objectReference: {fileID: 0}
+    - target: {fileID: 8078250050968973674, guid: dc1c7e0e60d06514097e0d84052caec8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8195372147681334554, guid: dc1c7e0e60d06514097e0d84052caec8, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 287956796

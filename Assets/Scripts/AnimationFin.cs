@@ -8,28 +8,28 @@ public class AnimationFinScript : NetworkBehaviour
     public GameObject panelBas;
     public TextMeshProUGUI texte;
 
+    private string gagnantManche;
     private string hostWin = "Le joueur Hôte a gagné la partie !";
     private string clientWin = "Le joueur Client a gagné la partie !";
 
     public void animationFinLancement(string gagnant)
     {
-        Debug.Log("Animation de fin de partie pour " + gagnant);
+        Debug.Log("Animation de fin de partie. Gagnant = " + gagnant);
+        gagnantManche = gagnant;
+
 
         texte.text = gagnant == "host" ? hostWin : clientWin;
-        MettreAJourTexteClientRpc(gagnant);
+        MettreAJourTexteClientRpc();
 
-        if (IsServer)
-        {
-            deplacementPanelClientRpc();
-        }
+        deplacementPanelClientRpc();
 
     }
 
     // RPC pour que le texte s'affiche chez tout le monde
     [ClientRpc]
-    private void MettreAJourTexteClientRpc(string gagnant)
+    private void MettreAJourTexteClientRpc()
     {
-        texte.text = gagnant == "host" ? hostWin : clientWin;
+        texte.text = gagnantManche == "host" ? hostWin : clientWin;
     }
 
     [ClientRpc]
@@ -67,7 +67,6 @@ public class AnimationFinScript : NetworkBehaviour
             GameManager.onMancheEnd?.Invoke(); // Fin de manche. On reset le jeu
         }
         CancelInvoke("inverseDeplacementPanelClientRpc");
-        gameObject.SetActive(false); // Desactive l'animation de fin
     }
 
 }

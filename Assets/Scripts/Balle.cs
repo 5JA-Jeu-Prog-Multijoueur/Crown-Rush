@@ -69,8 +69,7 @@ public class Balle : NetworkBehaviour
                 Destroy(collision.gameObject);
 
                 // Dire au script AnimationFin de lancer l'animation de fin (avec le parametre pour le texte)
-                animationFin.SetActive(true);
-                Invoke("mancheFin", 0.1f); // Lancer la fin de manche dans 0.5 seconde
+                animationFin.GetComponent<AnimationFinScript>().animationFinLancement(IsHost ? "host" : "client");
 
                 break;
             case "Normal":
@@ -105,11 +104,6 @@ public class Balle : NetworkBehaviour
             default:
                 break;
         }
-    }
-
-    private void mancheFin()
-    {
-        animationFin.GetComponent<AnimationFinScript>().animationFinLancement(IsHost ? "host" : "client");
     }
 
 
