@@ -64,8 +64,6 @@ public class GameManager : NetworkBehaviour
 
     NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
     onMancheEnd += finManche;
-
-    
   }
 
   public override void OnNetworkDespawn()
@@ -142,14 +140,18 @@ public class GameManager : NetworkBehaviour
 
     lanceManche();
   }
+  
   public void finManche()
   {
+    
+
+
     Debug.Log("Fin de la manche actuelle");
 
     // Enlever tout ce qui doit etre enlevé (blocs, balles etc.)
     int layer = LayerMask.NameToLayer("mancheObjets");
     GameObject[] tousObjets = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-    
+
     foreach (GameObject objet in tousObjets)
     {
       if (objet.layer == layer)

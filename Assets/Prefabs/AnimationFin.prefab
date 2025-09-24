@@ -209,7 +209,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Gagnant Placeholder
+  m_text: "Le joueur H\xF4te a gagn\xE9 la partie !"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7ca0a5abd58ee5544913a7c1d1451619, type: 2}
   m_sharedMaterial: {fileID: -4951964090609594954, guid: 7ca0a5abd58ee5544913a7c1d1451619, type: 2}
@@ -331,7 +331,7 @@ Animator:
   m_GameObject: {fileID: 8078250050968973674}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0268dfac2698c764baae617477e3e907, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8a2e251ea2121c44a8908d7b3913b0c4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 287956796
+  GlobalObjectIdHash: 3774052625
   InScenePlacedSourceGlobalObjectIdHash: 3774052625
   DeferredDespawnTick: 0
   Ownership: 1
