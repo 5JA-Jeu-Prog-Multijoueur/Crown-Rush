@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1771945258416960559}
   - component: {fileID: 2499824855002530080}
-  m_Layer: 0
-  m_Name: Bloc_Vitesse
-  m_TagString: Untagged
+  m_Layer: 3
+  m_Name: Bloc_Eclair
+  m_TagString: Eclair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

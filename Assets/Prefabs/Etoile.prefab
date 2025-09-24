@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6980266598481328598}
   - component: {fileID: 6413884557827702254}
   - component: {fileID: -145450315433204955}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Etoile
   m_TagString: Etoile
   m_Icon: {fileID: 0}
