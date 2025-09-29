@@ -9,19 +9,31 @@ public class AnimationFinScript : NetworkBehaviour
     public TextMeshProUGUI texte;
     private string hostWin = "Le joueur Hôte a gagné la partie !";
     private string clientWin = "Le joueur Client a gagné la partie !";
+    private string gagnantPartie;
 
-    public void animationFinLancement(string gagnant)
+    // S'abonner à etoileTouchee
+    private void Awake()
     {
-        if (gagnant == "host")
-        {
-            texte.text = hostWin;
-        }
-        else
-        {
-            texte.text = clientWin;
-        }
+        GameManager.etoileTouchee += animationFinLancement;
+    }
+    private void OnNetworkDisable()
+    {
+        GameManager.etoileTouchee -= animationFinLancement;
+    }
 
+    public void animationFinLancement()
+    {
+        if (!IsHost) return;
+        Debug.Log("Animation de fin lancée");
+
+        Debug.Log("Gagnant de la partie: " + GameManager.gagnantPartie);
+
+        gagnantPartie = GameManager.gagnantPartie;
+        // Lancer RPC 
+        ChangeTexteClientRpc(gagnantPartie);
+        // Lancer l'animation
         this.GetComponent<Animator>().SetTrigger("lancement");
+        // Animation pour retirer les panels 
         Invoke("animationFinRangement", 2f);
 
     }
@@ -31,14 +43,35 @@ public class AnimationFinScript : NetworkBehaviour
         Debug.Log("Animation de fin terminée");
 
         this.GetComponent<Animator>().SetTrigger("fin");
-        // Dire au GameManager que la partie est terminée apres un délais de 2 secondes
-        Invoke("finDeLaPartie", 2f);
+        Invoke("finDeLaManche", 2f);
 
     }
 
-    private void finDeLaPartie()
+    private void finDeLaManche()
     {
-                GameManager.onPartieEnd?.Invoke();
+        Debug.Log("Fin de partie!");
+        ResetAnimationTexteClientRpc(); // Reset le texte de l'animation
+
+        GameManager.onMancheEnd?.Invoke(); // Active la sequence de fin de la manche
+    }
+
+    [ClientRpc]
+    private void ChangeTexteClientRpc(string gagnant)
+    {
+        if (gagnant == "host")
+        {
+            texte.text = hostWin;
+        }
+        else
+        {
+            texte.text = clientWin;
+        }
+    }
+
+    [ClientRpc]
+    public void ResetAnimationTexteClientRpc()
+    {
+        texte.text = "";
     }
 
 }
