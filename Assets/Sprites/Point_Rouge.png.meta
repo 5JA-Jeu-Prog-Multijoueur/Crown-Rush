@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2d5bbfe5bbd63f94fb8198fd4f8fc01b
+guid: c7519ef32840ccb4598e4eb9c8b9f572
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2973648540424930172
-    second: Modele_Fond_Jeu_0
+      213: -2371049096600719818
+    second: Point_Rouge_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Modele_Fond_Jeu_0
+      name: Point_Rouge_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1000
-        height: 1800
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 48cfc15586a7bb6d0800000000000000
-      internalID: -2973648540424930172
+      spriteID: 63e6a14b867581fd0800000000000000
+      internalID: -2371049096600719818
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Modele_Fond_Jeu_0: -2973648540424930172
+      Point_Rouge_0: -2371049096600719818
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
