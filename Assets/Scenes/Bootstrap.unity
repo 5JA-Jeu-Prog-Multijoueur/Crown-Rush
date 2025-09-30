@@ -163,7 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37914ce2a11c824382ba39a1819a372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lancement
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1001 &3379397763416704853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -214,10 +213,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2168989624803113323, guid: fc673fed9b0cb2242b1d6f73ba39eb86, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3691548254539200321, guid: fc673fed9b0cb2242b1d6f73ba39eb86, type: 3}
-      propertyPath: NetworkConfig.ForceSamePrefabs
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

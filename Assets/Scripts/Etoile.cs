@@ -30,7 +30,7 @@ public class Etoile : NetworkBehaviour
             if (direction == 1)
             { // Deplacement vers la droite
                 yield return null;
-                //Debug.Log("Deplacement etoile vers la droite");
+                Debug.Log("Deplacement etoile vers la droite");
                 while (transform.position.x < limiteDroite)
                 {
                     transform.position = Vector2.MoveTowards(transform.position, new Vector2(limiteDroite, transform.position.y), Time.deltaTime * vitesseEtoile);
@@ -40,7 +40,7 @@ public class Etoile : NetworkBehaviour
             else // Deplacement vers la gauche
             {
                 yield return null;
-                //Debug.Log("Deplacement etoile vers la gauche");
+                Debug.Log("Deplacement etoile vers la gauche");
                 while (transform.position.x > limiteGauche)
                 {
                     transform.position = Vector2.MoveTowards(transform.position, new Vector2(limiteGauche, transform.position.y), Time.deltaTime * vitesseEtoile);

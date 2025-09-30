@@ -6,6 +6,7 @@ using Unity.Netcode.Components;
 public class Balle : NetworkBehaviour
 {
 
+    public GameObject animationFin;
     public float vitesseBalle = 2f;
 
     public Sprite blocNormalSprite;
@@ -16,7 +17,8 @@ public class Balle : NetworkBehaviour
     void Awake()
     {
         Debug.Log("Balle Start de : " + gameObject.name);
-        GameManager.onMancheEnd += finManche;
+
+        // Balle: Bouge en ligne droite, pas affecter par la gravite et aucune friction de l'air
 
 
         positionDepart = transform.position;
@@ -35,11 +37,6 @@ public class Balle : NetworkBehaviour
             Debug.Log("Balle lancée vers le haut dans 2 secondes");
             Invoke("pousseBalles", 2f);
         }
-    }
-
-    private void OnNetworkDisable()
-    {
-        GameManager.onMancheEnd -= finManche;
     }
 
     private void pousseBalles()
@@ -68,20 +65,12 @@ public class Balle : NetworkBehaviour
         switch (collision.gameObject.tag)
         {
             case "Etoile":
+                Debug.Log(this.name + " a touché l'étoile, fin de manche!");
                 Destroy(collision.gameObject);
 
                 // Dire au script AnimationFin de lancer l'animation de fin (avec le parametre pour le texte)
+                animationFin.GetComponent<AnimationFinScript>().animationFinLancement(IsHost ? "host" : "client");
 
-                // Changer le nom selon si c'est la balle de l'hote ou celle du client
-                if (positionDepart.y > 0)
-                {
-                    GameManager.gagnantPartie = "host";
-                }
-                else
-                {
-                    GameManager.gagnantPartie = "client";
-                }
-                GameManager.etoileTouchee?.Invoke(); // Appel de l'event partout
                 break;
             case "Normal":
                 //Debug.Log("Balle a touché un bloc normal");
@@ -123,6 +112,8 @@ public class Balle : NetworkBehaviour
         // Si on touche le vide (HorsJeu)
         if (collision.gameObject.tag == "HorsJeu")
         {
+            // Desactive la balle, 5 secondes d'attente, replace au position de depart 
+            gameObject.SetActive(false);
             Invoke("RepositionnerBalle", 5f);
         }
     }
@@ -161,13 +152,5 @@ public class Balle : NetworkBehaviour
         float aleaX = random.Next(0, 2) == 0 ? -vitesseBalle : vitesseBalle;
         float aleaY = random.Next(0, 2) == 0 ? -vitesseBalle : vitesseBalle;
         GetComponent<Rigidbody2D>().AddForce(new Vector2(aleaX, aleaY), ForceMode2D.Impulse);
-    }
-
-
-    // Delete en fin de manche
-    private void finManche()
-    {
-        // Au cas ou il y a un probleme de sync, on desactive la balle via elle-meme
-        Destroy(gameObject);
     }
 }
