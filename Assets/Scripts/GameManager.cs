@@ -175,10 +175,13 @@ public class GameManager : NetworkBehaviour
         // Si on a un gagnant de manche et il a deja 2 points, on a un gagnant de partie
         if (gagnantPartie == "host")
         {
-            if (scoreHostInt == 2) 
+            if (scoreHostInt == 2)
             {
                 joueurGagnant = true;
-            } else
+                scoreHost[scoreHostInt].SetActive(true);
+                scoreHostInt++;
+            }
+            else
             {
                 scoreHost[scoreHostInt].SetActive(true);
                 scoreHostInt++;
@@ -189,6 +192,8 @@ public class GameManager : NetworkBehaviour
             if (scoreClientInt == 2)
             {
                 joueurGagnant = true;
+                scoreClient[scoreClientInt].SetActive(true);
+                scoreClientInt++;
             }
             else
             {
@@ -210,14 +215,8 @@ public class GameManager : NetworkBehaviour
             setTexteGagnantClientRpc();
             gagnantTexte.GetComponent<Animator>().SetTrigger("apparait");
 
-            // Cacher les scores
-            for (int i = 0; i < scoreHost.Length; i++)
-            {
-                scoreHost[i].SetActive(false);
-                scoreClient[i].SetActive(false);
-            }
             // Retour au hub
-            Invoke("nouvellePartie", 2f);
+            Invoke("nouvellePartie", 3f);
         }
         else
         {
@@ -242,15 +241,39 @@ public class GameManager : NetworkBehaviour
     // public void nouvellePartie()
     // {
     //     // Deconnecte tous les joueurs et retourne au hub
-    //     for (int i = 0; i < Network.connections.length; i++)
+    //     // for (int i = 0; i < Network.connections.length; i++)
+    //     // {
+    //     //     Network.CloseConnection(Network.connections[i], true);
+    //     // }
+
+    //     // Cacher les scores
+    //     for (int i = 0; i < scoreHost.Length; i++)
     //     {
-    //         Network.CloseConnection(Network.connections[i], true);
+    //         scoreHost[i].SetActive(false);
+    //         scoreClient[i].SetActive(false);
     //     }
 
-    //     NetworkManager.Singleton.Shutdown();
+    //     // NetworkManager.Singleton.Shutdown();
     //     NetworkManager.Singleton.SceneManager.LoadScene("Hub", LoadSceneMode.Single);
     //     SceneManager.LoadScene("Hub"); // Au cas ou le shutdown empeche le Singleton.SceneManager de marcher
     // }
+
+    public void nouvellePartie()
+    {
+        // Cacher les scores
+        for (int i = 0; i < scoreHost.Length; i++)
+        {
+            scoreHost[i].SetActive(false);
+            scoreClient[i].SetActive(false);
+        }
+
+        // Charger la scène pour tout le monde (host + clients)
+        if (NetworkManager.Singleton.IsServer) // Host/Server uniquement
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene("Hub", LoadSceneMode.Single);
+        }
+    }
+
 
     [ClientRpc]
     private void setTexteGagnantClientRpc()
