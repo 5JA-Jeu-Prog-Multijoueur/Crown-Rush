@@ -239,22 +239,22 @@ public class GameManager : NetworkBehaviour
 
     // Une fois le script des blocs fini, donne aux joueurs le contrôle de leur palette + lance la balle 
 
-    public void nouvellePartie()
-    {
-        // Deconnecte tous les joueurs et retourne au hub
-        for (int i = 0; i < Network.connections.length; i++)
-        {
-            Network.CloseConnection(Network.connections[i], true);
-        }
+    // public void nouvellePartie()
+    // {
+    //     // Deconnecte tous les joueurs et retourne au hub
+    //     for (int i = 0; i < Network.connections.length; i++)
+    //     {
+    //         Network.CloseConnection(Network.connections[i], true);
+    //     }
 
-        NetworkManager.Singleton.Shutdown();
-        NetworkManager.Singleton.SceneManager.LoadScene("Hub", LoadSceneMode.Single);
-        SceneManager.LoadScene("Hub"); // Au cas ou le shutdown empeche le Singleton.SceneManager de marcher
-
-
+    //     NetworkManager.Singleton.Shutdown();
+    //     NetworkManager.Singleton.SceneManager.LoadScene("Hub", LoadSceneMode.Single);
+    //     SceneManager.LoadScene("Hub"); // Au cas ou le shutdown empeche le Singleton.SceneManager de marcher
 
 
-    }
+
+
+    // }
 
     [ClientRpc]
     private void setTexteGagnantClientRpc()
