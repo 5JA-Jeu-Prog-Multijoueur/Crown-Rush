@@ -919,6 +919,78 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &938246837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 938246841}
+  - component: {fileID: 938246842}
+  - component: {fileID: 938246838}
+  m_Layer: 0
+  m_Name: SetupPartieTimer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &938246838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938246837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26923c19fb6f2214ab09bbe6cd731a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetupPartieTimer
+  ShowTopMostFoldoutHeaderGroup: 1
+  timerTexte: {fileID: 1794396736}
+--- !u!4 &938246841
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938246837}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &938246842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938246837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 2569929313
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &997478588
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,9 +1037,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1096198684}
-  - component: {fileID: 1096198687}
-  - component: {fileID: 1096198685}
   - component: {fileID: 1096198686}
+  - component: {fileID: 1096198685}
   m_Layer: 0
   m_Name: SetupMancheManager
   m_TagString: Untagged
@@ -1009,7 +1080,7 @@ MonoBehaviour:
   - {fileID: 1154928946108126299, guid: 09348dc33b5b143448732f22965db23a, type: 3}
   - {fileID: 1154928946108126299, guid: 09348dc33b5b143448732f22965db23a, type: 3}
   - {fileID: 1154928946108126299, guid: 09348dc33b5b143448732f22965db23a, type: 3}
-  - {fileID: 1154928946108126299, guid: 066ff473807454c469c3cb39eff1479a, type: 3}
+  - {fileID: 1154928946108126299, guid: 451aff2104361864ca5528666748ec58, type: 3}
   - {fileID: 1154928946108126299, guid: 451aff2104361864ca5528666748ec58, type: 3}
   - {fileID: 1154928946108126299, guid: 451aff2104361864ca5528666748ec58, type: 3}
   - {fileID: 1154928946108126299, guid: f8ef96558daaacc4989433e7d25b1d9f, type: 3}
@@ -1033,24 +1104,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1096198683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26923c19fb6f2214ab09bbe6cd731a81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SetupPartieTimer
-  ShowTopMostFoldoutHeaderGroup: 1
-  timerTexte: {fileID: 1794396736}
---- !u!114 &1096198687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1096198683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1363975925
+  GlobalObjectIdHash: 1725595320
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2775,6 +2832,7 @@ SceneRoots:
   - {fileID: 33660222}
   - {fileID: 1618400436}
   - {fileID: 1096198684}
+  - {fileID: 938246841}
   - {fileID: 1495777888}
   - {fileID: 1966020930}
   - {fileID: 997478589}

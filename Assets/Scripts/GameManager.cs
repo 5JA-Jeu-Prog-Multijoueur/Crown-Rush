@@ -51,48 +51,23 @@ public class GameManager : NetworkBehaviour
     // Palettes des joueurs
     public GameObject paletteJoueur1; // Prefab de la palette du joueur 1
     public GameObject paletteJoueur2; // Prefab de la palette du joueur 2
-    // 
+    // Fin des variables
 
 
-    // Création du singleton
-    private void Awake()
+
+    private void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-            //  DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+        Debug.Log("GameManager started.");
+//         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+
+        gagnantPartie = ""; // Reset le gagnant de la partie
+        scoreClientInt = 0;
+        scoreHostInt = 0;
+        joueurGagnant = false;
 
 
-    public override void OnNetworkSpawn()
-    {
-        Debug.Log("GameManager OnNetworkSpawn");
-        base.OnNetworkSpawn();
 
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-        onMancheEnd += finManche;
-    }
-
-    public override void OnNetworkDespawn()
-    {
-        base.OnNetworkDespawn();
-
-        if (NetworkManager.Singleton != null)
-        {
-            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
-            onMancheEnd -= finManche;
-        }
-    }
-
-
-    private void OnClientConnected(ulong clientId)
-    {
-        Debug.Log("Qte clients: " + NetworkManager.Singleton.ConnectedClientsList.Count);
+        Debug.Log("START ~ Qte clients: " + NetworkManager.Singleton.ConnectedClientsList.Count);
 
         if (!IsHost) return;
 
@@ -122,9 +97,41 @@ public class GameManager : NetworkBehaviour
         CacherPanelAttenteClientRpc(); // RPC pour cacher le panel d'attente sur tous les clients
         partieEnCours = true;
         onPartieStart?.Invoke(); // Appel de l'event partout
-
-
     }
+
+    // Création du singleton
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            //  DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+    public override void OnNetworkSpawn()
+    {
+        Debug.Log("GameManager OnNetworkSpawn");
+
+        onMancheEnd += finManche;
+    }
+
+    public override void OnNetworkDespawn()
+    {
+
+        if (NetworkManager.Singleton != null)
+        {
+            onMancheEnd -= finManche;
+        }
+        // Stop les coroutines si elles sont en cours
+        StopAllCoroutines();
+    }
+
 
     // RPC pour cacher le panelAttente sur tous les clients
     [ClientRpc]
@@ -134,15 +141,6 @@ public class GameManager : NetworkBehaviour
     }
 
     // 
-
-    private void Start()
-    {
-        Debug.Log("GameManager started.");
-        gagnantPartie = ""; // Reset le gagnant de la partie
-        scoreClientInt = 0;
-        scoreHostInt = 0;
-        joueurGagnant = false;
-    }
 
 
 
@@ -236,28 +234,6 @@ public class GameManager : NetworkBehaviour
         // Script pour apparition des blocs
     }
 
-    // Une fois le script des blocs fini, donne aux joueurs le contrôle de leur palette + lance la balle 
-
-    // public void nouvellePartie()
-    // {
-    //     // Deconnecte tous les joueurs et retourne au hub
-    //     // for (int i = 0; i < Network.connections.length; i++)
-    //     // {
-    //     //     Network.CloseConnection(Network.connections[i], true);
-    //     // }
-
-    //     // Cacher les scores
-    //     for (int i = 0; i < scoreHost.Length; i++)
-    //     {
-    //         scoreHost[i].SetActive(false);
-    //         scoreClient[i].SetActive(false);
-    //     }
-
-    //     // NetworkManager.Singleton.Shutdown();
-    //     NetworkManager.Singleton.SceneManager.LoadScene("Hub", LoadSceneMode.Single);
-    //     SceneManager.LoadScene("Hub"); // Au cas ou le shutdown empeche le Singleton.SceneManager de marcher
-    // }
-
     public void nouvellePartie()
     {
         // Cacher les scores
@@ -265,6 +241,17 @@ public class GameManager : NetworkBehaviour
         {
             scoreHost[i].SetActive(false);
             scoreClient[i].SetActive(false);
+        }
+
+        // On delete les joueurs
+        int layer = LayerMask.NameToLayer("joueurs");
+        GameObject[] tousObjets = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        foreach (GameObject objet in tousObjets)
+        {
+            if (objet.layer == layer)
+            {
+                Destroy(objet);
+            }
         }
 
         // Charger la scène pour tout le monde (host + clients)

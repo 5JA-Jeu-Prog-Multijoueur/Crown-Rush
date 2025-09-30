@@ -15,6 +15,13 @@ public class SetupPartieTimer : NetworkBehaviour
     public void OnDisable()
     {
         GameManager.onPartieStart -= TimerLancement;
+        StopAllCoroutines();
+    }
+
+    private void OnNetworkDisable()
+    {
+        GameManager.onPartieStart -= TimerLancement;
+        StopAllCoroutines();
     }
 
 

@@ -5,7 +5,7 @@ using System;
 
 public class SetupMancheManager : NetworkBehaviour
 {
-
+    public static SetupMancheManager instance { private set; get; }
     // Blocs // Array des types de blocs à instancier (prefabs)
     public GameObject[] typesDeBlocs;
             // Qte max de blocs et de lignes
@@ -29,14 +29,38 @@ public class SetupMancheManager : NetworkBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+            // DontDestroyOnLoad removed as requested
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         GameManager.onMancheSetup += SetupManche;
         GameManager.onMancheStart += StartManche;
+    }
+
+    private void OnDestroy()
+    {
+        // CRITICAL: Unsubscribe from events and set instance to null
+        GameManager.onMancheSetup -= SetupManche;
+        GameManager.onMancheStart -= StartManche;
+        StopAllCoroutines();
+
+        if (instance == this)
+        {
+            instance = null; // This prevents the MissingReferenceException
+        }
     }
 
     private void OnNetworkDisable()
     {
         GameManager.onMancheSetup -= SetupManche;
         GameManager.onMancheStart -= StartManche;
+
     }
 
     private void SetupManche()
