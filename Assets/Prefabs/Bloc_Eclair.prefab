@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 6525851112975288710}
   - component: {fileID: 7221217221230184427}
   - component: {fileID: -3800704363383269435}
-  m_Layer: 0
-  m_Name: Bloc_Speed
-  m_TagString: Speed
+  - component: {fileID: -2204916832530356786}
+  m_Layer: 3
+  m_Name: Bloc_Eclair
+  m_TagString: Eclair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,3 +164,15 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &-2204916832530356786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154928946108126299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db165aed0edeb97478ed7116b5e9d8a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EclairSFX

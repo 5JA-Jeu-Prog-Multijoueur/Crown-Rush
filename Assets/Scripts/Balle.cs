@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 
 public class Balle : NetworkBehaviour
 {
 
-    public float vitesseBalle = 2f;
+    public float vitesseBalle = 4f;
 
     public Sprite blocNormalSprite;
 
@@ -15,8 +16,7 @@ public class Balle : NetworkBehaviour
     void Awake()
     {
         Debug.Log("Balle Start de : " + gameObject.name);
-
-        // Balle: Bouge en ligne droite, pas affecter par la gravite et aucune friction de l'air
+        GameManager.onMancheEnd += finManche;
 
 
         positionDepart = transform.position;
@@ -35,6 +35,25 @@ public class Balle : NetworkBehaviour
             Debug.Log("Balle lancée vers le haut dans 2 secondes");
             Invoke("pousseBalles", 2f);
         }
+    }
+
+    void FixedUpdate()
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+
+        if (rb.linearVelocity.magnitude < vitesseBalle * 0.5f) // si elle ralentit trop
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * vitesseBalle;
+        }
+        else
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * rb.linearVelocity.magnitude;
+        }
+    }
+
+    private void OnNetworkDisable()
+    {
+        GameManager.onMancheEnd -= finManche;
     }
 
     private void pousseBalles()
@@ -62,6 +81,22 @@ public class Balle : NetworkBehaviour
         // Puis on donne/deal avec les effets selon le type de bloc touché (+ delete objet toucher)
         switch (collision.gameObject.tag)
         {
+            case "Etoile":
+                Destroy(collision.gameObject);
+
+                // Dire au script AnimationFin de lancer l'animation de fin (avec le parametre pour le texte)
+
+                // Changer le nom selon si c'est la balle de l'hote ou celle du client
+                if (positionDepart.y > 0)
+                {
+                    GameManager.gagnantPartie = "host";
+                }
+                else
+                {
+                    GameManager.gagnantPartie = "client";
+                }
+                GameManager.etoileTouchee?.Invoke(); // Appel de l'event partout
+                break;
             case "Normal":
                 //Debug.Log("Balle a touché un bloc normal");
                 // RIEN
@@ -83,7 +118,7 @@ public class Balle : NetworkBehaviour
                 Destroy(collision.gameObject);
 
                 break;
-            case "Speed":
+            case "Eclair":
                 //Debug.Log("Balle a touché un bloc speed");
                 // On accélère la balle de 15%
                 GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity * 1.15f;
@@ -94,21 +129,15 @@ public class Balle : NetworkBehaviour
             default:
                 break;
         }
-
-
-
-
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Si on touche le vide (HorsJeu)
         if (collision.gameObject.tag == "HorsJeu")
         {
-            // Desactive la balle, 5 secondes d'attente, replace au position de depart 
-            gameObject.SetActive(false);
             Invoke("RepositionnerBalle", 5f);
-
         }
     }
 
@@ -133,11 +162,26 @@ public class Balle : NetworkBehaviour
     {
         // Replace la balle au centre, reset la vitesse, et réactive la balle
         gameObject.SetActive(true);
+        // Enlever l'interpolation (pour empecher un slide visible lorsqu'on replace la balle)
+        this.GetComponent<NetworkTransform>().Interpolate = false;
         transform.position = positionDepart;
+
+        // Remet l'interpolation
+        this.GetComponent<NetworkTransform>().Interpolate = true;
+
+        // Relance la balle
         GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
         System.Random random = new System.Random();
         float aleaX = random.Next(0, 2) == 0 ? -vitesseBalle : vitesseBalle;
         float aleaY = random.Next(0, 2) == 0 ? -vitesseBalle : vitesseBalle;
         GetComponent<Rigidbody2D>().AddForce(new Vector2(aleaX, aleaY), ForceMode2D.Impulse);
+    }
+
+
+    // Delete en fin de manche
+    private void finManche()
+    {
+        // Au cas ou il y a un probleme de sync, on desactive la balle via elle-meme
+        Destroy(gameObject);
     }
 }

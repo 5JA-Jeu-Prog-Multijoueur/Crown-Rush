@@ -8,13 +8,13 @@ TagManager:
   - Normal
   - DoubleHP
   - Cactus
-  - Speed
   - Etoile
+  - Eclair
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - mancheObjets
   - Water
   - UI
   - 

@@ -5,6 +5,9 @@ using System;
 
 public class Etoile : NetworkBehaviour
 {
+
+    
+
     public float limiteGauche;
     public float limiteDroite;
     public float vitesseEtoile;
@@ -18,38 +21,39 @@ public class Etoile : NetworkBehaviour
     // Deplacement gauche-droite de l'etoile (en restant dans les limites)
     IEnumerator bougerEtoile()
     {
-        float direction = UnityEngine.Random.Range(0, 2) == 0 ? -1f : 1f;
+
+        int direction = UnityEngine.Random.Range(0, 2) == 0 ? 1 : -1; // Direction de depart au hasard
+
 
         while (true) // Toujours en mouvement (avec lerp) - Va vers la gauche/droite pour debuter et ensuite fait des allers-retours entre limiteGauche et limiteDroite
         {
-            // Deplace dans la direction random choisie jusqu'a l'une des deux limites
-
-            if (direction == -1) // Vers la gauche
-            {
-                while (transform.position.x >= limiteGauche)
+            if (direction == 1)
+            { // Deplacement vers la droite
+                yield return null;
+                //Debug.Log("Deplacement etoile vers la droite");
+                while (transform.position.x < limiteDroite)
                 {
-                    transform.position = Vector2.Lerp(transform.position, new Vector2(limiteGauche, transform.position.y), Time.deltaTime * vitesseEtoile); // Mouvement
+                    transform.position = Vector2.MoveTowards(transform.position, new Vector2(limiteDroite, transform.position.y), Time.deltaTime * vitesseEtoile);
                     yield return null;
                 }
-                direction = 1; // Change de direction
             }
-            else // Vers la droite
+            else // Deplacement vers la gauche
             {
-                while (transform.position.x <= limiteDroite)
+                yield return null;
+                //Debug.Log("Deplacement etoile vers la gauche");
+                while (transform.position.x > limiteGauche)
                 {
-                    transform.position = Vector2.Lerp(transform.position, new Vector2(limiteDroite, transform.position.y), Time.deltaTime * vitesseEtoile); // Mouvement
+                    transform.position = Vector2.MoveTowards(transform.position, new Vector2(limiteGauche, transform.position.y), Time.deltaTime * vitesseEtoile);
                     yield return null;
                 }
-                direction = -1; // Change de direction
             }
 
-
+            direction = direction * -1; // Inverse la direction
 
         }
 
-        Debug.Log("Etoile a fini de bouger");
     }
 
 
-    
+ 
 }

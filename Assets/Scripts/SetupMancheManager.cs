@@ -8,6 +8,9 @@ public class SetupMancheManager : NetworkBehaviour
 
     // Blocs // Array des types de blocs à instancier (prefabs)
     public GameObject[] typesDeBlocs;
+            // Qte max de blocs et de lignes
+    public int qteMaxBlocsParLigne;
+    public int qteMaxLignes;
 
 
     // Balle 
@@ -57,10 +60,6 @@ public class SetupMancheManager : NetworkBehaviour
         setupBlocsFini = false;
         // Variables générales
         bool apparitionEnCours = true;
-
-        // Qte max de blocs et de lignes
-        int qteMaxBlocsParLigne = 8;
-        int qteMaxLignes = 10;
 
         // Qte actuelle de blocs et de lignes
         int qteBlocsParLigne = 1;
@@ -172,7 +171,6 @@ public class SetupMancheManager : NetworkBehaviour
         Debug.Log("Manche commencée pour " + (IsHost ? "host" : "client"));
 
         // Apparition des 2 balles (1 par joueur)
-
         if (IsServer) // Que le serveur doit faire apparaitre les choses
         {
             // Instancie la balle en haut

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4024774386412176781}
   - component: {fileID: 6525851112975288710}
   - component: {fileID: -3800704363383269435}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bloc_Vide
   m_TagString: Cactus
   m_Icon: {fileID: 0}

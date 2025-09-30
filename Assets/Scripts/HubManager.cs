@@ -27,13 +27,13 @@ public class HubManager : NetworkBehaviour
 
     private void Update()
   {
-    if (!IsHost) return; // Si tu n'es pas l'host (car NetworkBehavior se fait partout)
+    // if (!IsHost) return; // Si tu n'es pas l'host (car NetworkBehavior se fait partout)
 
-    if (NetworkManager.Singleton.ConnectedClientsList.Count >= 2) // Si 2 joueurs connectés
-    {
-      Debug.Log("2 joueurs connectés, lancement de la partie");
-      NetworkManager.Singleton.SceneManager.LoadScene("Jeu", LoadSceneMode.Single);
-      // 
-    }
+    // if (NetworkManager.Singleton.ConnectedClientsList.Count >= 2) // Si 2 joueurs connectés
+    // {
+    //   Debug.Log("2 joueurs connectés, lancement de la partie");
+    //   NetworkManager.Singleton.SceneManager.LoadScene("Jeu", LoadSceneMode.Single);
+    //   // 
+    // }
   }
 }
