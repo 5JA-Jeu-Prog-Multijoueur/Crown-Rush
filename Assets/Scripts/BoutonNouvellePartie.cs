@@ -2,21 +2,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
 
-public class LoadSceneNetwork : MonoBehaviour
+public class LoadSceneNetwork : NetworkBehaviour
 {
     [SerializeField] private string nomScene;
 
     public void ChargerScene()
     {
-        if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer)
+        if (!IsHost) return; // Si tu n'es pas l'host (car NetworkBehavior se fait partout)
+
+        if (NetworkManager.Singleton.ConnectedClientsList.Count >= 2) // Si 2 joueurs connectés
         {
-            // Host / Serveur : on synchronise la scène avec tous les clients
-            NetworkManager.Singleton.SceneManager.LoadScene(nomScene, LoadSceneMode.Single);
-        }
-        else
-        {
-            // Si jamais un client clique par erreur, on l'ignore
-            Debug.Log("Seul le Host/Serveur peut changer de scène.");
+        Debug.Log("2 joueurs connectés, lancement de la partie");
+        NetworkManager.Singleton.SceneManager.LoadScene("Jeu", LoadSceneMode.Single);
+        // 
         }
     }
 }
