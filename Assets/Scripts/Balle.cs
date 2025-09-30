@@ -6,7 +6,7 @@ using Unity.Netcode.Components;
 public class Balle : NetworkBehaviour
 {
 
-    public float vitesseBalle = 2f;
+    public float vitesseBalle = 4f;
 
     public Sprite blocNormalSprite;
 
@@ -34,6 +34,20 @@ public class Balle : NetworkBehaviour
         {
             Debug.Log("Balle lancée vers le haut dans 2 secondes");
             Invoke("pousseBalles", 2f);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+
+        if (rb.linearVelocity.magnitude < vitesseBalle * 0.5f) // si elle ralentit trop
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * vitesseBalle;
+        }
+        else
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * rb.linearVelocity.magnitude;
         }
     }
 
