@@ -250,10 +250,6 @@ public class GameManager : NetworkBehaviour
     //     NetworkManager.Singleton.Shutdown();
     //     NetworkManager.Singleton.SceneManager.LoadScene("Hub", LoadSceneMode.Single);
     //     SceneManager.LoadScene("Hub"); // Au cas ou le shutdown empeche le Singleton.SceneManager de marcher
-
-
-
-
     // }
 
     [ClientRpc]
